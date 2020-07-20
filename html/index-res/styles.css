@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+a {
+    cursor: pointer;
+}
+
+body {
+    font-family: "Segoe UI", -apple-system, Ubuntu, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    /*background-color: #fff; */
+}
+
+/* container based code */
+.limiter {
+    width: 100%;
+    margin: auto;
+}
+
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
+
+.login-wrap {
+    width: 960px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 177px 130px 33px 95px;
+}
+
+.login-100-pic {
+    width: 316px;
+}
+
+/*login form*/
+.login-100-form {
+    width: 290px;
+    margin: 0 auto;
+}
+
+    .login-100-form .form-title {
+        font-size: 34px;
+        color: #333333;
+        line-height: 1.2;
+        text-align: center;
+        width: 100%;
+        display: block;
+        padding-bottom: 54px;
+        font-weight: 700;
+    }
+
+    .login-100-form .wrap-input-100 {
+        position: relative;
+        width: 100%;
+        z-index: 1;
+        margin-bottom: 10px;
+    }
+
+        .login-100-form .wrap-input-100 .input-100 {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #666666;
+            display: block;
+            width: 100%;
+            background: #e6e6e6;
+            height: 50px;
+            border-radius: 25px;
+            padding: 0 30px 0 68px;
+            border: none;
+        }
+    .login-100-form .container-login-form-button {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+        .login-100-form .container-login-form-button .form-button {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #fff;
+            text-transform: uppercase;
+            width: 100%;
+            height: 50px;
+            border-radius: 25px;
+            background: #57b846;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 25px;
+            transition: all 0.4s;
+            outline: none;
+            border: none;
+            font-weight: 700;
+        }
+
+        .login-100-form .container-login-form-button .form-button:hover {
+            background: black;
+            cursor: pointer;
+        }
+
+    .login-100-form .signup-footer {
+        padding-top: 12px;
+        text-align: center!important;
+    }
+
+        .login-100-form .signup-footer .highlight {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #999999;
+        }
+
+        .login-100-form .signup-footer .txt {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666666;
+        }
+    .login-100-form .create-footer {
+        padding-top: 136px;
+        text-align: center!important;
+        margin: 0 auto;
+    }
+
+        .login-100-form .create-footer .txt {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666666;
+            text-align: center;
+        }
+
+            .login-100-form .create-footer .txt:hover {
+                color: #57b846;
+                cursor: pointer;
+            }
