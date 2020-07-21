@@ -9,6 +9,8 @@
 #include <Ultralight/Ultralight.h>
 #include <Ultralight/platform/Logger.h>
 #include <AppCore/Platform.h>
+#include <JavaScriptCore/JavaScript.h>
+#include <AppCore/JSHelpers.h>
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -151,5 +153,12 @@ namespace LunarGUI {
         GLFWcursor* _cursor_hand;
         GLFWcursor* _cursor_hresize;
         GLFWcursor* _cursor_vresize;
+    private:
+        virtual void OnDOMReady(ultralight::View* caller,
+            uint64_t frame_id,
+            bool is_main_frame,
+            const ultralight::String& url) override;
+    public:
+        ultralight::JSValue LogMSG(const ultralight::JSObject& object, const ultralight::JSArgs& args);
     };
 }

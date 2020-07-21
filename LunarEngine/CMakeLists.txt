@@ -14,7 +14,7 @@ include_directories(${CMAKE_SOURCE_DIR}/Lib/include
 
 link_directories(${CMAKE_SOURCE_DIR}/libs)
 
-add_library(LunarEngine STATIC ${SOURCE_FILES} "source/LunarUltralight/UltralightView.cpp" "source/LunarUltralight/UltralightMaterial.cpp" "public/LunarImage.h" "source/Utils/LunarImage.cpp" "public/LunarUltralight/UltralightData.h" "source/LunarUltralight/UltralightImage.cpp" "source/LunarUltralight/UltralightRenderer.cpp" "public/LunarUser/LunarInputManager.h" "public/LunarUser/LunarInputData.h" "source/Utils/LunarInputManager.cpp" "source/LunarUltralight/UltralightInput.cpp" "public/LunarUltralight/HtmlLoader.h" "source/LunarUltralight/HtmlLoader.cpp")
+add_library(LunarEngine STATIC ${SOURCE_FILES} "source/LunarUltralight/UltralightView.cpp" "source/LunarUltralight/UltralightMaterial.cpp" "public/LunarImage.h" "source/Utils/LunarImage.cpp" "public/LunarUltralight/UltralightData.h" "source/LunarUltralight/UltralightImage.cpp" "source/LunarUltralight/UltralightRenderer.cpp" "public/LunarUser/LunarInputManager.h" "public/LunarUser/LunarInputData.h" "source/Utils/LunarInputManager.cpp" "source/LunarUltralight/UltralightInput.cpp" "public/LunarUltralight/HtmlLoader.h" "source/LunarUltralight/HtmlLoader.cpp" "source/LunarUltralight/UltralightJavascript.cpp")
 if(WIN32)
 target_link_libraries(${PROJECT_NAME} AppCore Ultralight UltralightCore WebCore ${Vulkan_LIBRARY} ${ASSIMP_LIBRARIES} ${WINLIBS} glfw)
 else(UNIX)
