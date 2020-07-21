@@ -82,6 +82,8 @@ namespace LunarGUI {
 		currAccumulator += deltaTime;
 		if (currAccumulator >= renderTime) {
 			PassMouseInput(_cPos);
+			UpdateKeyEvent();
+
 			currAccumulator = 0;
 
 			RenderViews(frameIndex);

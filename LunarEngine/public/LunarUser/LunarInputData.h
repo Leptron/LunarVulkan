@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Ultralight/Ultralight.h>
+
 namespace LunarInput {
 	enum MouseButton {
 		Left, 
@@ -7,6 +9,7 @@ namespace LunarInput {
 		Middle,
 		None
 	};
+
 
 	struct MousePos {
 		int x, y;

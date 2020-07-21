@@ -3,7 +3,13 @@
 
 namespace LunarGUI {
 	LunarInput::MousePos UltralightManager::_cPos = {};
+
 	bool UltralightManager::updatePos = false;
+	bool UltralightManager::updateKey = false;
+	bool UltralightManager::secondKey = false;
+
+	ultralight::KeyEvent UltralightManager::evt = {};
+	ultralight::KeyEvent UltralightManager::sEvt = {};
 
 	void UltralightManager::PassMouseInput(LunarInput::MousePos pos) {
 		if (updatePos) {
@@ -35,15 +41,33 @@ namespace LunarGUI {
 					evt.button = ultralight::MouseEvent::kButton_Middle;
 			}
 
-			for (auto layout : layouts) {
+			for (auto& layout : layouts) {
 				if (layout.active) {
-					for (auto pane : layout._panes) {
+					for (auto& pane : layout._panes) {
 						if ((pos.x >= pane.tX && pos.x <= pane.fX) && (pos.y >= pane.tY && pos.y <= pane.fY)) {
 							evt.x -= pane.tX;
 							evt.y -= pane.tY;
 
-							pane._view->get()->FireMouseEvent(evt);		
+							pane._view->get()->FireMouseEvent(evt);	
 						}
+					}
+				}
+			}
+		}
+	}
+
+	void UltralightManager::UpdateKeyEvent() {
+		if (updateKey) {
+			for (auto& layout : layouts) {
+				if (layout.active) {
+					for (auto& pane : layout._panes) {
+						pane._view->get()->FireKeyEvent(evt);
+						if (secondKey) {
+							pane._view->get()->FireKeyEvent(sEvt);
+							secondKey = false;
+						}
+
+						updateKey = false;
 					}
 				}
 			}

@@ -57,6 +57,8 @@ namespace LunarEngine {
 
         glfwSetCursorPosCallback(window, _input.CursorPositionCallback);
         glfwSetMouseButtonCallback(window, _input.MouseButtonCallback);
+        glfwSetKeyCallback(window, LunarInput::WindowKeyCallback);
+        glfwSetCharCallback(window, LunarInput::WindowCharCallback);
     }
 
     void LunarEngine::MainLoop() {

@@ -11,7 +11,7 @@ namespace LunarGUI {
     UltralightManager::UltralightManager() {
         ultralight::Config config;
         config.device_scale = 1.0;
-        config.resource_path = "./resources/";
+        config.resource_path = "./res/";
 
         ultralight::Platform::instance().set_config(config);
         ultralight::Platform::instance().set_font_loader(ultralight::GetPlatformFontLoader());
@@ -43,6 +43,7 @@ namespace LunarGUI {
                 _layout.active = false;
                 for (auto& pane : _layout._panes) {
                     pane._view->get()->set_needs_paint(false);
+                    pane._view->get()->Unfocus();
 
                     vkUnmapMemory(device, pane.uniformBuffersMemory[1]);
                     vkUnmapMemory(device, pane.uniformBuffersMemory[0]);
@@ -57,6 +58,7 @@ namespace LunarGUI {
                 _layout.active = true;
                 for (auto& pane : _layout._panes) {
                     pane._view->get()->set_needs_paint(true);
+                    pane._view->get()->Focus();
 
                     vkMapMemory(device, pane.uniformBuffersMemory[1], 0, sizeof(pane.ubo), 0, &pane.dataOne);
                     vkMapMemory(device, pane.uniformBuffersMemory[0], 0, sizeof(pane.ubo), 0, &pane.data);

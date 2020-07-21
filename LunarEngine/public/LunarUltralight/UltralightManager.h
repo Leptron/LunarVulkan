@@ -131,16 +131,20 @@ namespace LunarGUI {
         void RenderDT(float deltaTime, int frameIndex);
     private:
         float currAccumulator = 0;
-        float renderTime = 1 / 60;
+        float renderTime = 1 / 120;
 
     public:
         void PassMouseInput(LunarInput::MousePos pos);
         void OnChangeCursor(ultralight::View* caller, ultralight::Cursor cursor);
-
+        void UpdateKeyEvent();
         
         static bool updatePos;
         static LunarInput::MousePos _cPos;
 
+        static bool updateKey;
+        static bool secondKey;
+        static ultralight::KeyEvent evt;
+        static ultralight::KeyEvent sEvt;
     private:
         GLFWcursor* _cursor_ibeam = nullptr;
         GLFWcursor* _cursor_crosshair;
