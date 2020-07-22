@@ -43,6 +43,9 @@ namespace LunarGUI {
 		bool foundStylesheet = false;
 		std::string stylesheet_loc;
 
+		bool foundScript = false;
+		std::string script_loc;
+
 		for (auto line : unparsed_strings) {
 			char c = line.at(0);
 			if (c == '@') {
@@ -53,6 +56,13 @@ namespace LunarGUI {
 					stylesheet_loc.pop_back();
 
 					foundStylesheet = true;
+					locksFound += 1;
+				}
+				else if (args[0] == "@import" && args[1] == "script") {
+					script_loc = args[2];
+					script_loc.pop_back();
+
+					foundScript = true;
 					locksFound += 1;
 				}
 			}
@@ -85,6 +95,38 @@ namespace LunarGUI {
 				if (line == "<head>") {
 					std::string styleNode = "<style>" + styleSheetContents + "</style>";
 					unparsed_strings.insert(unparsed_strings.begin() + i + 1, styleNode);
+					inserted = true;
+				}
+			}
+		}
+
+		if (foundScript) {
+			std::vector<std::string> nameArgs = split(this->fileLoc, '.');
+			std::string fileName = nameArgs[0];
+
+			std::string styleLoc = "html/" + fileName + "-res/index.js";
+			std::string scriptContents;
+
+			std::ifstream file(styleLoc);
+
+			if (!file.is_open())
+				throw std::runtime_error("couldnt open the file");
+
+			file.seekg(0, std::ios::end);
+			scriptContents.reserve(file.tellg());
+			file.seekg(0, std::ios::beg);
+
+			scriptContents.assign((std::istreambuf_iterator<char>(file)),
+				std::istreambuf_iterator<char>());
+
+			bool inserted = false;
+			for (int i = 0; i < unparsed_strings.size() && !inserted; i++) {
+				std::string line = unparsed_strings[i];
+				line.erase(std::remove_if(line.begin(), line.end(), std::isspace), line.end());
+
+				if (line == "</body>") {
+					std::string styleNode = "<script>" + scriptContents + "</script>";
+					unparsed_strings.insert(unparsed_strings.begin() + i, styleNode);
 					inserted = true;
 				}
 			}

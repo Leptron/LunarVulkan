@@ -12,6 +12,7 @@ namespace LunarGUI {
         ultralight::Config config;
         config.device_scale = 1.0;
         config.resource_path = "./res/";
+        config.use_gpu_renderer = false;
 
         ultralight::Platform::instance().set_config(config);
         ultralight::Platform::instance().set_font_loader(ultralight::GetPlatformFontLoader());
