@@ -6,7 +6,8 @@ fastify.get('/', async (req, reply) => {
 
 
 //user auth
-fastify.post('/signup', async(req, reply) => {
+fastify.post('/login', async(req, reply) => {
+    console.log("request");
     const email = req.body.email;
     const psswd = req.body.psswd;
 
@@ -34,6 +35,10 @@ const start = async () => {
             
             url: 'mongodb+srv://lunar_server:LeptronApp$45@lunardevcluster.s70jv.azure.mongodb.net/LunarServer'
         })
+        fastify.register(require('fastify-cors'), { 
+            // put your options here
+        })
+
         await fastify.listen(3000);
         fastify.log.info(`server listening on ${fastify.server.address().port}`)
     } catch(err) {
