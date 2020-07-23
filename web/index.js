@@ -1,12 +1,4 @@
-const fastify = require('fastify')({ logger: true });
-
-const mongoWrapper = require("./mongo-handler");
-const LunarAuth = require("./user-auth.js");
-
-function exitHandler() {
-    mongoWrapper.cleanup();
-    process.exit(0);
-}
+const fastify = require('fastify')()
 
 fastify.get('/', async (req, reply) => {
     return { LunarServiceWorking: true };
@@ -18,14 +10,30 @@ fastify.post('/signup', async(req, reply) => {
     const email = req.body.email;
     const psswd = req.body.psswd;
 
-    LunarAuth.login_auth(email, psswd);
-    
-    return { LunarSignupService: "unhandled" };
+    const db = fastify.mongo.db;
+    db.collection('LunarUsers', onCollection);
+
+    function onCollection(err, col) {
+        if(err) return reply.send(err);
+
+        col.findOne({email: email}, (err, user) => {
+            if(user == null)
+                reply.send({user_exists: false})
+        })
+    }
 })
 
+
+
 const start = async () => {
-    mongoWrapper.initResources();
     try {
+        fastify.register(require('fastify-mongodb'), {
+            // force to close the mongodb connection when app stopped
+            // the default value is false
+            forceClose: true,
+            
+            url: 'mongodb+srv://lunar_server:LeptronApp$45@lunardevcluster.s70jv.azure.mongodb.net/LunarServer'
+        })
         await fastify.listen(3000);
         fastify.log.info(`server listening on ${fastify.server.address().port}`)
     } catch(err) {
@@ -35,6 +43,3 @@ const start = async () => {
 }
 
 start();
-
-process.on('exit', exitHandler.bind());
-process.on('SIGINT', exitHandler.bind());
