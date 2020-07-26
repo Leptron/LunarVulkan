@@ -147,6 +147,9 @@ namespace LunarGUI {
         static bool secondKey;
         static ultralight::KeyEvent evt;
         static ultralight::KeyEvent sEvt;
+
+        static bool updateScroll;
+        static ultralight::ScrollEvent scrollEvent;
     private:
         GLFWcursor* _cursor_ibeam = nullptr;
         GLFWcursor* _cursor_crosshair;

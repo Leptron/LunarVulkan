@@ -13,10 +13,11 @@ namespace LunarGUI {
         config.device_scale = 1.0;
         config.resource_path = "./res/";
         config.use_gpu_renderer = false;
+        
 
         ultralight::Platform::instance().set_config(config);
         ultralight::Platform::instance().set_font_loader(ultralight::GetPlatformFontLoader());
-        ultralight::Platform::instance().set_file_system(ultralight::GetPlatformFileSystem("."));
+        ultralight::Platform::instance().set_file_system(ultralight::GetPlatformFileSystem("./html/"));
         ultralight::Platform::instance().set_logger(this);
 
         renderer = ultralight::Renderer::Create();

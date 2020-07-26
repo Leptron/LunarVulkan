@@ -41,7 +41,7 @@ namespace LunarGUI {
         _tmpView->set_needs_paint(true);
         _tmpView->set_view_listener(this);
         _tmpView->set_load_listener(this);
-        _tmpView->LoadHTML(contents.c_str());
+        _tmpView->LoadURL(contents.c_str());
 
 
         renderer->Update();

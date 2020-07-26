@@ -7,9 +7,11 @@ namespace LunarGUI {
 	bool UltralightManager::updatePos = false;
 	bool UltralightManager::updateKey = false;
 	bool UltralightManager::secondKey = false;
+	bool UltralightManager::updateScroll = false;
 
 	ultralight::KeyEvent UltralightManager::evt = {};
 	ultralight::KeyEvent UltralightManager::sEvt = {};
+	ultralight::ScrollEvent UltralightManager::scrollEvent = {};
 
 	void UltralightManager::PassMouseInput(LunarInput::MousePos pos) {
 		if (updatePos) {
@@ -71,6 +73,18 @@ namespace LunarGUI {
 					}
 				}
 			}
+		}
+
+		if(updateScroll) {
+			for(auto& layout : layouts) {
+				if(layout.active) {
+					for(auto& pane : layout._panes) {
+						pane._view->get()->FireScrollEvent(scrollEvent);
+					}
+				}
+			}
+
+			updateScroll = false;
 		}
 	}
 

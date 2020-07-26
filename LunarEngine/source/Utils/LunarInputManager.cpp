@@ -2,6 +2,7 @@
 
 
 #include <Ultralight/KeyCodes.h>
+#include <cmath>
 
 using namespace ultralight::KeyCodes;
 
@@ -146,6 +147,27 @@ namespace LunarInput {
 			LunarGUI::UltralightManager::updatePos = true;
 		}
 	}
+
+    double Scale(GLFWwindow* window) {
+        float xscale, yscale;
+        glfwGetWindowContentScale(window, &xscale, &yscale);
+
+        return (double)xscale;
+    }
+
+    int deviceToPixels(int val, GLFWwindow* window) {
+        return (int)std::round(val * Scale(window));
+    }
+
+    void InputManager::WindowScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+        ultralight::ScrollEvent evt;
+        evt.type = ultralight::ScrollEvent::kType_ScrollByPixel;
+        evt.delta_x = deviceToPixels((int)xoffset * 32, window);
+        evt.delta_y = deviceToPixels((int)yoffset * 32, window);
+
+        LunarGUI::UltralightManager::scrollEvent = evt;
+        LunarGUI::UltralightManager::updateScroll = true;
+    }
 
 	int GLFWModsToUltralightMods(int mods) {
 		int result = 0;

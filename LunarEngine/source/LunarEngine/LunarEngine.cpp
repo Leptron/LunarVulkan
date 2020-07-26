@@ -32,7 +32,7 @@ namespace LunarEngine {
         LunarGUI::HTMLLoader indexPage("index.html");
 
         _guiManager.PassWindow(window);
-        _guiManager.ConstructView(indexPage.HTMLContents(), glm::vec2(1280, 720), glm::vec2(640, 360), "index");
+        _guiManager.ConstructView("file:///index.html", glm::vec2(1280, 720), glm::vec2(640, 360), "index");
         _guiManager.ConstructLayout("epic");
         _guiManager.SetLayout("epic");
 
@@ -59,6 +59,7 @@ namespace LunarEngine {
         glfwSetMouseButtonCallback(window, _input.MouseButtonCallback);
         glfwSetKeyCallback(window, LunarInput::WindowKeyCallback);
         glfwSetCharCallback(window, LunarInput::WindowCharCallback);
+        glfwSetScrollCallback(window, _input.WindowScrollCallback);
     }
 
     void LunarEngine::MainLoop() {

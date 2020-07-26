@@ -1,16 +1,25 @@
-@import stylesheet styles.css;
-@import script index.js;
-
 <!DOCTYPE html>
 <html>
     <head>
         <title>HTML Test</title>
+        <link rel="stylesheet" href="index-res/styles.css" />
+        <link rel="stylesheet" href="core-css/css-notif.css" />
     </head>
     <body onload="app()">
+        <div id="l-msg-area" class="">
+            <template id="msgBoxLoc">
+                <div class="msgbox-box">
+                    <div class="msgbox-content" id="content">
+                        persistent message
+                    </div>
+                    <a class="msgbox-close" href="#">Close</a>
+                </div>
+           </template>
+        </div>
         <div class="limiter">
             <div class="login-container">
                 <div class="login-wrap">
-                    <form class="login-100-form" onsubmit="submitLogin()">
+                    <form class="login-100-form noshow" onsubmit="submitLogin(event)" id="loginForm"> 
                         <span class="form-title">Welcome Back</span>
 
                         <div class="wrap-input-100">
@@ -41,10 +50,56 @@
                             <a class="txt">Create your Account</a>
                         </div>
                     </form>
+
+                    <form class="login-100-form " onsubmit="submitSignup(event)" id="signupForm">
+                        <span class="form-title">Signup for Lunar</span>
+
+                        <div class="wrap-input-100">
+                            <input class="input-100" id="signup-display-name" type="text" name="displayName" placeholder="Username" />
+                            <span class="focus-input-100"></span>
+                            <span class="symbol-input">
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input-100">
+                            <input class="input-100" id="signup-email" type="email" name="email" placeholder="Email" />
+                            <span class="focus-input-100"></span>
+                            <span class="symbol-input">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input-100">
+                            <input class="input-100" id="signup-password" type="password" name="email" placeholder="Password" />
+                            <span class="focus-input-100"></span>
+                            <span class="symbol-input">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input-100">
+                            <input class="input-100" id="signup-password-conf" type="password" name="email" placeholder="Password Confirmation" />
+                            <span class="focus-input-100"></span>
+                            <span class="symbol-input">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </div>
+
+                        <div class="container-login-form-button">
+                            <button class="form-button">Login</button>
+                        </div>
+
+                        <div class="create-footer">
+                            <a class="txt">Already have an account? Login Here</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <script src="https://kit.fontawesome.com/79ccc29487.js" crossorigin="anonymous"></script>
+        
+        <script src="core-libs/msg-box.js"></script>
+        <script src="core-libs/font-awseome.js" crossorigin="anonymous"></script>
+        <script src="index-res/index.js"></script>
     </body>
 </html>

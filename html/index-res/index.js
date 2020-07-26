@@ -1,8 +1,16 @@
 var loaded = false;
 
+var msgboxNoClose = new MessageBox("#l-msg-area", {
+	closeTime: 5000,
+	hideCloseButton: false
+});
+
 function app() {
 	LogMSG("Javascript has Loaded on View");
 	loaded = true;
+
+	//creation of the notifaction
+	
 }
 
 async function postData(url = '', data = {}) {
@@ -23,8 +31,9 @@ async function postData(url = '', data = {}) {
 	return response.json(); // parses JSON response into native JavaScript objects
 }
 
-function submitLogin() {
-	
+function submitLogin(e) {
+	e.preventDefault();
+
 	var loginJSON = {};
 	var email = document.getElementById("login-email").value;
 	var psswd = document.getElementById("login-password").value;
@@ -36,7 +45,13 @@ function submitLogin() {
 	postData(url, {email: email, psswd: psswd})
 		.then(data => {
 			if(data.user_exists == false) {
-				LogMSG("User does not exist");
+				//notification
+				message = new MessageBox("l-msg-area", "msgBoxLoc");
+				message.create(10000, "User is Not Found, try again or Signup for our Service.");
 			}
 		})
+}
+
+function submitSignup(e) {
+	e.preventDefault();
 }

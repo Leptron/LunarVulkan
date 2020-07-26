@@ -9,6 +9,9 @@ namespace LunarInput {
 	void WindowKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	void WindowCharCallback(GLFWwindow* window, unsigned int codepoint);
 
+	double Scale(GLFWwindow* window);
+	int deviceToPixels(int val, GLFWwindow* window);
+
 	class InputManager {
 	public:
 		InputManager();
@@ -19,8 +22,10 @@ namespace LunarInput {
 
 		static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
 		static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-
+		static void WindowScrollCallback(GLFWwindow* windwo, double xoffset, double yoffset);
 	private:
 		LunarGUI::UltralightManager* manager;
+
+		//helper window methods
 	};
 }
