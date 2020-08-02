@@ -79,16 +79,10 @@ namespace LunarGUI {
 	}
 
 	void UltralightManager::RenderDT(float deltaTime, int frameIndex) {
-		currAccumulator += deltaTime;
 		UpdateKeyEvent();
 		
-		if (currAccumulator >= renderTime) {
 			PassMouseInput(_cPos);
-
-			currAccumulator = 0;
-
 			RenderViews(frameIndex);
 			updatePos = false;
-		}
 	}
 }

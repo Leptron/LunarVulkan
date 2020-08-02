@@ -7,19 +7,11 @@
     </head>
     <body onload="app()">
         <div id="l-msg-area" class="">
-            <template id="msgBoxLoc">
-                <div class="msgbox-box">
-                    <div class="msgbox-content" id="content">
-                        persistent message
-                    </div>
-                    <a class="msgbox-close" href="#">Close</a>
-                </div>
-           </template>
         </div>
         <div class="limiter">
             <div class="login-container">
                 <div class="login-wrap">
-                    <form class="login-100-form noshow" onsubmit="submitLogin(event)" id="loginForm"> 
+                    <form class="login-100-form" onsubmit="submitLogin(event)" id="loginForm"> 
                         <span class="form-title">Welcome Back</span>
 
                         <div class="wrap-input-100">
@@ -47,11 +39,32 @@
                         </div>
 
                         <div class="create-footer">
-                            <a class="txt">Create your Account</a>
+                            <a class="txt" id="switch-signup">Create your Account</a>
                         </div>
                     </form>
 
-                    <form class="login-100-form " onsubmit="submitSignup(event)" id="signupForm">
+                    <form class="login-100-form noshow" onsubmit="validateCode(event)" id="validationForm">
+                        <div class="form-title">Verify your Account</div>
+
+                        <h3 class="footing">We sent an email to <span id="email-text-verification"> OK.gmail.com</span></h3>
+                    
+                        <div class="wrap-input-100" style="margin-top: 35px;">
+                            <input class="input-100" type="text" id="validate-text" name="validate-text" placeholder="Validation Code" />
+                            <span class="focus-input-100"></span>
+                            <span class="symbol-input">
+                                <i class="fa fa-hashtag"></i>
+                            </span>
+                        </div>
+
+                        <div class="container-login-form-button">
+                            <button class="form-button">Validate</button>
+                        </div>
+                        <div class="signup-footer" style="margin-bottom: 70px;" >
+                            <a class="txt" id="resend"><span class="highlight">Resend Email</span></a>
+                        </div>
+                    </form>
+
+                    <form class="login-100-form noshow" onsubmit="submitSignup(event)" id="signupForm">
                         <span class="form-title">Signup for Lunar</span>
 
                         <div class="wrap-input-100">
@@ -87,11 +100,15 @@
                         </div>
 
                         <div class="container-login-form-button">
-                            <button class="form-button">Login</button>
+                            <button class="form-button">Signup</button>
+                        </div>
+
+                        <div class="signup-footer">
+                            <a class="txt">By signing up you accept our </a> <span class="highlight" style="cursor: pointer;">Terms of Service</span>
                         </div>
 
                         <div class="create-footer">
-                            <a class="txt">Already have an account? Login Here</a>
+                            <a class="txt" id="switch-login">Already have an account? Login Here</a>
                         </div>
                     </form>
                 </div>
@@ -99,7 +116,9 @@
         </div>
         
         <script src="core-libs/msg-box.js"></script>
-        <script src="core-libs/font-awseome.js" crossorigin="anonymous"></script>
         <script src="index-res/index.js"></script>
+
+        <!--non essential libs are loaded last-->
+        <script src="core-libs/font-awseome.js" crossorigin="anonymous"></script>
     </body>
 </html>

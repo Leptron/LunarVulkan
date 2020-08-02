@@ -1,5 +1,7 @@
 var loaded = false;
 
+const urlRoot = "http://localhost:5000/"
+
 var msgboxNoClose = new MessageBox("#l-msg-area", {
 	closeTime: 5000,
 	hideCloseButton: false
@@ -9,8 +11,20 @@ function app() {
 	LogMSG("Javascript has Loaded on View");
 	loaded = true;
 
+	let xmlHTTP = new XMLHttpRequest();
+	xmlHTTP.open("GET", urlRoot + "clear");
+	xmlHTTP.send(null);
+
 	//creation of the notifaction
-	
+	document.getElementById("switch-login").addEventListener("click", function() {
+		document.getElementById("signupForm").classList.add("noshow");
+		document.getElementById("loginForm").classList.remove("noshow");
+	})
+
+	document.getElementById("switch-signup").addEventListener("click", function() {
+		document.getElementById("loginForm").classList.add("noshow");
+		document.getElementById("signupForm").classList.remove("noshow");
+	})
 }
 
 async function postData(url = '', data = {}) {
@@ -31,6 +45,63 @@ async function postData(url = '', data = {}) {
 	return response.json(); // parses JSON response into native JavaScript objects
 }
 
+function validateCode(e) {
+	e.preventDefault();
+
+	//get the email
+	let email = document.getElementById("email-text-verification").innerText;
+	let code = document.getElementById("validate-text").value;
+	let postJSON = {
+		email: email,
+		token: code
+	};
+
+	let url = urlRoot + "verify";
+	postData(url, postJSON)
+		.then(resp => {
+			if(resp.user_logged == false) {
+				document.getElementById("validationForm").classList.add("noshow");
+				document.getElementById("loginForm").classList.remove("noshow");
+
+				let xmlHTTP = new XMLHttpRequest();
+				xmlHTTP.open("GET", urlRoot + "clear");
+				xmlHTTP.send(null);
+				return;
+			}
+			
+			if(resp.verification_needed == false) {
+				//switch to the project panel;
+				return;
+			}
+
+			if(resp.user_exists == false) {
+				document.getElementById("validationForm").classList.add("noshow");
+				document.getElementById("loginForm").classList.remove("noshow");
+
+				let xmlHTTP = new XMLHttpRequest();
+				xmlHTTP.open("GET", urlRoot + "clear");
+				xmlHTTP.send(null);
+				return;
+			}
+
+			if(resp.user_verified) {
+				document.getElementById("validationForm").classList.add("noshow");
+				document.getElementById("loginForm").classList.remove("noshow");
+
+				let xmlHTTP = new XMLHttpRequest();
+				xmlHTTP.open("GET", urlRoot + "clear");
+				xmlHTTP.send(null);
+				return;
+			}			
+
+			if(resp.token_valid == false) {
+				message = new MessageBox("l-msg-area", "msgBoxLoc");
+				message.create(5000, "Your token is not valid, try again or resend the email");
+				return;
+			}
+		})
+}
+
 function submitLogin(e) {
 	e.preventDefault();
 
@@ -41,17 +112,78 @@ function submitLogin(e) {
 	loginJSON["email"] = email;
 	loginJSON["psswd"] = psswd;
 
-	let url = "http://localhost:3000/login";
-	postData(url, {email: email, psswd: psswd})
-		.then(data => {
-			if(data.user_exists == false) {
-				//notification
+	let url = urlRoot + "login";
+	postData(url, loginJSON)
+		.then(resp => {
+			if(resp.logged == true && resp.verified == false) {
+				//switch to verification page
+				document.getElementById("signupForm").classList.add("noshow");
+
+				document.getElementById("email-text-verification").innerText = loginJSON["email"];
+				document.getElementById("validationForm").classList.remove("noshow");
+				return;
+			} else if (resp.logged == true && resp.verified == true) {
+				//switch to project page
+				return;
+			}
+
+			if(resp.user_exists == false) {
 				message = new MessageBox("l-msg-area", "msgBoxLoc");
-				message.create(10000, "User is Not Found, try again or Signup for our Service.");
+				message.create(5000, "User does not exists, try again with a different email or signup for our service");
+				return;
+			}
+
+			if(resp.pass_match == false) {
+				message = new MessageBox("l-msg-area", "msgBoxLoc");
+				message.create(5000, "Your password doesnt match, please try again");
+				return;
 			}
 		})
 }
 
 function submitSignup(e) {
 	e.preventDefault();
+
+	var email = document.getElementById("signup-email").value;
+	var username = document.getElementById("signup-display-name").value;
+
+	var passwordOne = document.getElementById("signup-password").value;
+	var passwordConf = document.getElementById("signup-password-conf").value;
+	if(passwordOne != passwordConf) {
+		message = new MessageBox("l-msg-area", "msgBoxLoc");
+		message.create(5000, "Passwords do not match, try again");
+		return;
+	}
+
+	var loginJSON = {};
+	loginJSON["email"] = email;
+	loginJSON["username"] = username;
+	loginJSON["psswd"] = passwordConf;
+	
+	let url = urlRoot + "register";
+	postData(url, loginJSON)
+		.then(resp => {
+			if(resp.logged == true && resp.verified == false) {
+				// switch to the verification page
+				document.getElementById("signupForm").classList.add("noshow");
+
+				document.getElementById("email-text-verification").innerText = loginJSON["email"];
+				document.getElementById("validationForm").classList.remove("noshow");
+				return;
+			} else if (resp.logged = true && resp.verified == true) {
+				// go to project page
+				// TODO implement project page
+				return;
+			}
+
+			if(resp.user_exists == true) {
+				message = new MessageBox("l-msg-area", "msgBoxLoc");
+				message.create(5000, "User already exists, try again with a different email or login");
+				return;
+			}
+
+			document.getElementById("email-text-verification").innerText = loginJSON["email"];
+			document.getElementById("signupForm").classList.add("noshow");
+			document.getElementById("validationForm").classList.remove("noshow");
+		})
 }

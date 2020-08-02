@@ -133,7 +133,7 @@ namespace LunarGUI {
         void RenderDT(float deltaTime, int frameIndex);
     private:
         float currAccumulator = 0;
-        float renderTime = 1 / 120;
+        float renderTime = 1 / 300;
 
     public:
         void PassMouseInput(LunarInput::MousePos pos);

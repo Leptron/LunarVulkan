@@ -7,6 +7,9 @@
 using namespace ultralight::KeyCodes;
 
 namespace LunarInput {
+    const char* InputManager::lpText = "";
+    bool InputManager::lcv = false;
+
 	InputManager::InputManager() {
 
 	}
@@ -26,27 +29,52 @@ namespace LunarInput {
 
 	void WindowKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		ultralight::KeyEvent evt = {};
-		evt.type = action == GLFW_PRESS || action == GLFW_REPEAT ? ultralight::KeyEvent::kType_RawKeyDown : ultralight::KeyEvent::kType_KeyUp;
-		evt.virtual_key_code = GLFWKeyCodeToUltralightKeyCode(key);
-		evt.native_key_code = scancode;
-		ultralight::GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
-		evt.modifiers = GLFWModsToUltralightMods(mods);
+        ultralight::KeyEvent evt = {};
+        evt.type = action == GLFW_PRESS || action == GLFW_REPEAT ? ultralight::KeyEvent::kType_RawKeyDown : ultralight::KeyEvent::kType_KeyUp;
+        evt.virtual_key_code = GLFWKeyCodeToUltralightKeyCode(key);
+        evt.native_key_code = scancode;
+        ultralight::GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
+        evt.modifiers = GLFWModsToUltralightMods(mods);
         LunarGUI::UltralightManager::evt = evt;
-        
 
-        if (evt.type == ultralight::KeyEvent::kType_RawKeyDown && (key == GLFW_KEY_ENTER || key == GLFW_KEY_TAB)) {
-            ultralight::KeyEvent sEvt;
-            sEvt.type = ultralight::KeyEvent::kType_Char;
-            ultralight::String text = key == GLFW_KEY_ENTER ? ultralight::String("\r") : ultralight::String("\t");
-            sEvt.text = text;
-            sEvt.unmodified_text = text;
+        if(key == GLFW_KEY_V && mods == GLFW_MOD_CONTROL) {
+            if(action == GLFW_RELEASE)
+                return;
+            
+            ultralight::KeyEvent evt;
+            evt.type = ultralight::KeyEvent::kType_Char;
 
-            LunarGUI::UltralightManager::sEvt = sEvt;   
-            LunarGUI::UltralightManager::secondKey = true;
+            ultralight::String text = glfwGetClipboardString(window);
+            const char* check = glfwGetClipboardString(window);
+
+            evt.text = text;
+            evt.unmodified_text = text;
+
+            if(InputManager::lpText == check && InputManager::lcv == true) {
+                InputManager::lpText = "";
+                InputManager::lcv = false;
+                return;
+            }
+
+            InputManager::lcv = true;
+            InputManager::lpText = check;
+
+            LunarGUI::UltralightManager::evt = evt;
+            LunarGUI::UltralightManager::updateKey = true;
+        } else {
+            if (evt.type == ultralight::KeyEvent::kType_RawKeyDown && (key == GLFW_KEY_ENTER || key == GLFW_KEY_TAB)) {
+                ultralight::KeyEvent sEvt;
+                sEvt.type = ultralight::KeyEvent::kType_Char;
+                ultralight::String text = key == GLFW_KEY_ENTER ? ultralight::String("\r") : ultralight::String("\t");
+                sEvt.text = text;
+                sEvt.unmodified_text = text;
+
+                LunarGUI::UltralightManager::sEvt = sEvt;   
+                LunarGUI::UltralightManager::secondKey = true;
+            }
+
+            LunarGUI::UltralightManager::updateKey = true;
         }
-
-        LunarGUI::UltralightManager::updateKey = true;
 	}
 
     void WindowCharCallback(GLFWwindow* window, unsigned int codepoint) {
@@ -162,8 +190,8 @@ namespace LunarInput {
     void InputManager::WindowScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
         ultralight::ScrollEvent evt;
         evt.type = ultralight::ScrollEvent::kType_ScrollByPixel;
-        evt.delta_x = deviceToPixels((int)xoffset * 32, window);
-        evt.delta_y = deviceToPixels((int)yoffset * 32, window);
+        evt.delta_x = xoffset * 64;
+        evt.delta_y = yoffset * 64;
 
         LunarGUI::UltralightManager::scrollEvent = evt;
         LunarGUI::UltralightManager::updateScroll = true;
