@@ -1,5 +1,17 @@
 var loaded = false;
 
+var viewID = "";
+var pWidth, pHeight;
+
+function SetViewID(id) {
+	viewID = id;
+}
+
+function SetViewDims(width, height) {
+	pWidth  = width;
+	pHeight = height;
+}
+
 const urlRoot = "http://localhost:5000/"
 
 var msgboxNoClose = new MessageBox("#l-msg-area", {
@@ -8,7 +20,7 @@ var msgboxNoClose = new MessageBox("#l-msg-area", {
 });
 
 function app() {
-	LogMSG("Javascript has Loaded on View");
+	LogMSG("Javascript has Loaded on View " + window.location);
 	loaded = true;
 
 	let xmlHTTP = new XMLHttpRequest();
@@ -71,6 +83,7 @@ function validateCode(e) {
 			
 			if(resp.verification_needed == false) {
 				//switch to the project panel;
+				window.location.assign("file:///projects.html")
 				return;
 			}
 
@@ -124,6 +137,7 @@ function submitLogin(e) {
 				return;
 			} else if (resp.logged == true && resp.verified == true) {
 				//switch to project page
+				window.location.assign("file:///projects.html");
 				return;
 			}
 

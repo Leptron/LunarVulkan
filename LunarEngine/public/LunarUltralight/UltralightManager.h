@@ -163,5 +163,6 @@ namespace LunarGUI {
             const ultralight::String& url) override;
     public:
         ultralight::JSValue LogMSG(const ultralight::JSObject& object, const ultralight::JSArgs& args);
+        ultralight::JSValue SwitchPage(const ultralight::JSObject& object, const ultralight::JSArgs& args);
     };
 }
