@@ -35,10 +35,13 @@ namespace LunarGUI {
 	}
 
 	void UltralightManager::RecreateDims(int width, int height) {
-		glm::mat4 projection = glm::ortho(0.0f, (float)swapChainExtent.width, (float)swapChainExtent.height, 0.0f, 0.1f, 100.0f);
+		std::cout << "updated" << std::endl;
 
-		for (auto layout : layouts) {
-			for (auto pane : layout._panes) {
+		float newAspect = (float)width / (float)height;
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(swapChainExtent.width), static_cast<float>(swapChainExtent.height), 0.0f, -1.0f, 1.0f);
+
+		for (auto& layout : layouts) {
+			for (auto& pane : layout._panes) {
 				pane.ubo.projection = projection;
 			}
 		}

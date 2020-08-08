@@ -30,6 +30,8 @@ namespace LunarGUI {
         _pane.x = pos.x;
         _pane.y = pos.y;
         _pane.paneID = tagName;
+        _pane.paneWidth = dims.x;
+        _pane.paneHeight = dims.y;
 
         _pane.verts = verts;
         _pane.indices = indices;

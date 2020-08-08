@@ -50,12 +50,6 @@ namespace LunarInput {
             evt.text = text;
             evt.unmodified_text = text;
 
-            if(InputManager::lpText == check && InputManager::lcv == true) {
-                InputManager::lpText = "";
-                InputManager::lcv = false;
-                return;
-            }
-
             InputManager::lcv = true;
             InputManager::lpText = check;
 

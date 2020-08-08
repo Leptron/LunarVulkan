@@ -187,6 +187,8 @@ function submitSignup(e) {
 			} else if (resp.logged = true && resp.verified == true) {
 				// go to project page
 				// TODO implement project page
+
+				window.location.assign("file:///projects.html");
 				return;
 			}
 

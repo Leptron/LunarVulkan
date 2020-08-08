@@ -1,9 +1,45 @@
 <!DOCTYPE html> 
 <html>
     <head>
+        <title> Project Page </title>
 
+        <link rel="stylesheet" href="core-css/css-notif.css" />
+        <link rel="stylesheet" href="projects-res/styles.css" />
     </head>
-    <body>
-        <h1>projects</h1>
+    <body onload="app()">
+        <div id="l-msg-area"></div>
+
+        <div class="limiter">
+
+            <nav class="nv-bar">
+                <h2 class="header">Projects</h2>
+
+                <div class="account">
+                    <h4><i class="fa fa-user" aria-hidden="true" style="padding-right: 4px;"></i> My Account</h4>
+                </div>
+
+                <div class="creation">
+                    <h4><i class="fa fa-plus-square" aria-hidden="true"></i> New Project</h4>
+                    <h4><i class="fa fa-folder-open" aria-hidden="true"></i> Open Project</h4>
+                </div>
+            </nav>
+
+            <div class="main-container">
+                <div class="proj-side">
+                    <ul>
+                        <li class="active">Local Projects</li>
+                        <li>Cloud Projects</li>
+                    </ul>
+                </div>
+                <div class="projects">
+                    <ul class="project-list" id="proj-append">
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script src="projects-res/index.js"></script>
+        <script src="core-libs/font-awseome.js" crossorigin="anonymous"></script>
     </body>
 </html>

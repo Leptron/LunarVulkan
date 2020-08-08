@@ -23,10 +23,14 @@ namespace LunarGUI {
         renderer = ultralight::Renderer::Create();
 
         std::cout << "ultralight manager starting" << std::endl;
+
+        LunarEditor::ProjectManager::getInstance();
     }
 
     UltralightManager::~UltralightManager() {
         //DestroyAllLayouts();
+
+        LunarEditor::ProjectManager::getInstance()->updateManifest();
     }
 
     void UltralightManager::PassWindow(GLFWwindow* window) {

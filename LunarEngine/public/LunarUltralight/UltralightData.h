@@ -22,6 +22,8 @@
 #include <array>
 
 namespace LunarGUI {
+    static bool UpdateBuffers;
+
     struct ULVertex {
         glm::vec2 pos;
         glm::vec2 uv;

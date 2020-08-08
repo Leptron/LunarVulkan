@@ -31,6 +31,9 @@
 #include "../LunarUser/LunarInputData.h"
 #include "UltralightData.h"
 
+#include "../LunarEditor/Projects/ProjectData.h"
+#include "../LunarEditor/Projects/ProjectManager.h"
+
 typedef struct pixel
 {
     char b;
@@ -164,5 +167,6 @@ namespace LunarGUI {
     public:
         ultralight::JSValue LogMSG(const ultralight::JSObject& object, const ultralight::JSArgs& args);
         ultralight::JSValue SwitchPage(const ultralight::JSObject& object, const ultralight::JSArgs& args);
+        ultralight::JSValue GetProjects(const ultralight::JSObject& object, const ultralight::JSArgs& args);
     };
 }
